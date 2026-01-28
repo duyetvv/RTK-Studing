@@ -26,7 +26,11 @@ const initialState: AsyncRequest = {};
 const asyncRequests = createSlice({
   name: "asyncRequests",
   initialState,
-  reducers: {},
+  reducers: {
+    // updateRequestLoading: (state, action) => {
+    //   state[action.payload.reducerPath] = action.payload.status;
+    // },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher<ActionPayload>(isPending, (state, action) => {
@@ -34,7 +38,7 @@ const asyncRequests = createSlice({
         state[reducerPath] = { ...action.arg, loading: true };
       })
       .addMatcher<ActionPayload>(isFulfilled, (state, action) => {
-        const reducerPath = action.type.replace("/fulfileed", "");
+        const reducerPath = action.type.replace("/fulfilled", "");
         state[reducerPath] = { ...action.arg, loading: false };
       })
       .addMatcher<ActionPayload>(isRejected, (state, action) => {
@@ -45,3 +49,4 @@ const asyncRequests = createSlice({
 });
 
 export default asyncRequests.reducer;
+// export const { updateRequestLoading } = asyncRequests.actions;
